@@ -47,13 +47,13 @@ bool CompareString(const char* str1, const char* str2)
 
 bool FindNoun(char* word, int& noun)
 {
-	for (size_t i = 0; i < sizeof(nouns); i++)
+	int size = sizeof(nouns) / MAX_WORD_LENGTH;
+	for (size_t i = 0; i < size; i++)
 	{
 		if (CompareString(word, nouns[i]))
 		{
 			noun = i;
 			return true;
-			break;
 		}
 	}
 
@@ -62,13 +62,13 @@ bool FindNoun(char* word, int& noun)
 
 bool FindVerb(char* word, int& verb)
 {
-	for (size_t i = 0; i < sizeof(verbs); i++)
+	int size = sizeof(verbs) / MAX_WORD_LENGTH;
+	for (size_t i = 0; i < size; i++)
 	{
 		if (CompareString(word, verbs[i]))
 		{
 			verb = i;
 			return true;
-			break;
 		}
 	}
 	return false;
@@ -124,20 +124,18 @@ void Execute(char* inputString)
 		if (!FindWord(pos))
 		{
 			pos++;
-			printf("wars\n");
 			continue;
 		}
 
-		//if (FindVerb(word, verb))
-		//{
+		if (FindVerb(pos, verb))
+		{
+			printf("Found Verb: %s\n", pos);
+		}
 
-		//}
-
-		//if (FindNoun(word, noun))
-		//{
-
-		//}
-		printf("%s\n", pos);
+		if (FindNoun(pos, noun))
+		{
+			printf("Found Noun: %s\n", pos);
+		}
 		Advance(pos);
 	}
 
