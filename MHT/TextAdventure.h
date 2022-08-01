@@ -2,14 +2,21 @@
 #include "Game.h"
 #include <stdio.h>
 
-void Display(const char* displayString)
+void Display(const char* string)
 {
-	printf(displayString);
+	printf(string);
 }
-
+void DisplayFirstWord(char* word)
+{
+	for (; *word != '\0' && *word != ' '; word++)
+	{
+		printf("%c", *word);
+	}
+	printf("\n");
+}
 void GetInput(char* inputString)
 {
-	Display(">");
+	printf(">");
 	char c = 0;
 	size_t i = 0;
 	while (true)
@@ -28,7 +35,7 @@ void GetInput(char* inputString)
 			}
 		}
 	}
-	Display("\n");
+	printf("\n");
 }
 
 bool CompareString(const char* str1, const char* str2)
@@ -105,11 +112,11 @@ bool FindWord(char* pos)
 	}
 	return false;
 }
-void Clear(char* inputString)
+void Clear(char* string)
 {
 	for (size_t i = 0; i < MAX_INPUT_LENGTH; i++)
 	{
-		inputString[i] = '\0';
+		string[i] = '\0';
 	}
 }
 void Execute(char* inputString)
@@ -129,12 +136,14 @@ void Execute(char* inputString)
 
 		if (FindVerb(pos, verb))
 		{
-			printf("Found Verb: %s\n", pos);
+			printf("Found Verb: ");
+			DisplayFirstWord(pos);
 		}
 
 		if (FindNoun(pos, noun))
 		{
-			printf("Found Noun: %s\n", pos);
+			printf("Found Noun: ");
+			DisplayFirstWord(pos);
 		}
 		Advance(pos);
 	}
