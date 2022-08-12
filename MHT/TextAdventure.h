@@ -1,151 +1,281 @@
 #pragma once
-#include "Game.h"
 #include <stdio.h>
 
-void Display(const char* string)
-{
-	printf(string);
-}
-void DisplayFirstWord(char* word)
-{
-	for (; *word != '\0' && *word != ' '; word++)
-	{
-		printf("%c", *word);
-	}
-	printf("\n");
-}
-void GetInput(char* inputString)
-{
-	printf(">");
-	char c = 0;
-	size_t i = 0;
-	while (true)
-	{
-		c = getchar();
-		if (c == '\n')
-		{
-			break;
-		}
-		else
-		{
-			if (i < MAX_INPUT_LENGTH - 1)
-			{
-				inputString[i] = c;
-				i++;
-			}
-		}
-	}
-	printf("\n");
-}
+const unsigned char MAX_WORD_LENGTH = 16;
+const unsigned char MAX_SENTENCE_LENGTH = 64;
+const unsigned char MAX_WORD_COUNT = 32;
 
-bool CompareString(const char* str1, const char* str2)
+enum class WordType
 {
-	while (*str1 != '\0' && *str2 != '\0')
-	{
-		if (*str1 != *str2)
-		{
-			return false;
-		}
-		str1++;
-		str2++;
-	}
-	return true;
-}
+	INVALID_WORD,
+	VERB,
+	ROOM,
+	OBJECT,
+	CHARACTER,
+	CONJUCTION
+};
 
-bool FindNoun(char* word, int& noun)
+struct Word
 {
-	int size = sizeof(nouns) / MAX_WORD_LENGTH;
-	for (size_t i = 0; i < size; i++)
-	{
-		if (CompareString(word, nouns[i]))
-		{
-			noun = i;
-			return true;
-		}
-	}
+	char string[MAX_WORD_LENGTH] = {};
+	WordType type = WordType::INVALID_WORD;
+};
 
-	return false;
-}
-
-bool FindVerb(char* word, int& verb)
+struct Noun
 {
-	int size = sizeof(verbs) / MAX_WORD_LENGTH;
-	for (size_t i = 0; i < size; i++)
-	{
-		if (CompareString(word, verbs[i]))
-		{
-			verb = i;
-			return true;
-		}
-	}
-	return false;
-}
+	char name[MAX_WORD_LENGTH] = {};
+	char description[MAX_SENTENCE_LENGTH] = "";
+};
 
-void Advance(char*& pos)
+enum RoomFlag
 {
-	while (*pos != '\0')
-	{
-		pos++;
-		if (*pos == ' ')
-		{
-			break;
-		}
-	}
-}
+	INVALID_ROOM,
+	LIT,
+	LOCKED,
+};
 
-void Lower(char* pos)
+enum ObjectFlag
 {
-	while (*pos != '\0')
-	{
-		if (*pos >= 'A' && *pos <= 'Z')
-		{
-			*pos += 32;
-		}
-		pos++;
-	}
-}
-bool FindWord(char* pos)
+	INVALID_OBJECT,
+	PICKUP,
+	EQUIPTED,
+};
+
+enum CharacterFlag
 {
-	if (*pos >= 'a' && *pos <= 'z')
-	{
-		return true;
-	}
-	return false;
-}
-void Clear(char* string)
+	INVALID_CHARACTER,
+};
+
+
+struct Room : Noun
 {
-	for (size_t i = 0; i < MAX_INPUT_LENGTH; i++)
-	{
-		string[i] = '\0';
-	}
-}
-void Execute(char* inputString)
+	Room* up = nullptr;
+	Room* down = nullptr;
+	Room* north = nullptr;
+	Room* south = nullptr;
+	Room* east = nullptr;
+	Room* west = nullptr;
+	int flags = INVALID_ROOM;
+};
+
+struct Object : Noun
 {
-	int verb = -1;
-	int noun = -1;
+	Room* room = nullptr;
+	int flags = INVALID_OBJECT;
+};
 
-	char* pos = &inputString[0];
+struct Character : Noun
+{
+	Room* room = nullptr;
+	int health = 0;
+	int flags = INVALID_CHARACTER;
+};
 
-	while (*pos != '\0')
-	{
-		if (!FindWord(pos))
-		{
-			pos++;
-			continue;
-		}
+void DisplayName(Noun* noun);
+void DisplayDescription(Noun* noun);
+void DisplayRoom(Room* room);
+void DisplayUnknownWord(char* inputString);
 
-		if (FindVerb(pos, verb))
-		{
-			printf("Found Verb: ");
-			DisplayFirstWord(pos);
-		}
+void GetInput(char* inputString);
+void LowerInput(char* inputString);
+void ClearInput(char* inputString);
 
-		if (FindNoun(pos, noun))
-		{
-			printf("Found Noun: ");
-			DisplayFirstWord(pos);
-		}
-		Advance(pos);
-	}
+bool FindWordType(char* inputString, Word* words, Word*& word);
+bool FindWord(char*& inputString);
 
-}
+//struct Pickup : Noun
+//{
+//	Room* room = nullptr;
+//
+//};
+//
+//struct Weapon : Pickup
+//{
+//	unsigned char damage = 0;
+//};
+//
+//struct Lock : Noun
+//{
+//
+//};
+//
+//struct Key : Pickup
+//{
+//	//ToDo:
+//};
+//
+//struct Entity : Noun
+//{
+//	Room* room = nullptr;
+//	unsigned char health = 0;
+//};
+//
+//struct Enemy : Entity
+//{
+//};
+//
+//struct Player : Entity
+//{
+//};
+//
+//Game* Create()
+//{
+//	return new Game();
+//}
+//void Save(Game* game)
+//{
+//}
+//void Destroy(Game* game)
+//{
+//}
+//bool Execute(Game* game)
+//{
+//	return false;
+//}
+//bool FindNoun(Game* game)
+//{
+//	return false;
+//}
+//bool FindVerb(Game* game)
+//{
+//	return false;
+//}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Issues 
+//Light, Maybe a timer for the sun
+//Locations of rooms
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//int size = sizeof(verbs) / MAX_WORD_LENGTH;
+//for (size_t i = 0; i < size; i++)
+//{
+//	if (CompareString(word, verbs[i]))
+//	{
+//		verb = i;
+//		return true;
+//	}
+//}
+//void DisplayFirstWord(char* word)
+//{
+//	for (; *word != '\0' && *word != ' '; word++)
+//	{
+//		printf("%c", *word);
+//	}
+//	printf("\n");
+//}
+
+//
+
+//
+////bool FindSubject(char* word, int& subject)
+////{
+////	int size = sizeof(nouns) / MAX_WORD_LENGTH;
+////	for (size_t i = 0; i < size; i++)
+////	{
+////		if (CompareString(word, nouns[i]))
+////		{
+////			noun = i;
+////			return true;
+////		}
+////	}
+////
+////	return false;
+////}
+////
+////bool FindVerb(char* word, int& verb)
+////{
+////	int size = sizeof(verbs) / MAX_WORD_LENGTH;
+////	for (size_t i = 0; i < size; i++)
+////	{
+////		if (CompareString(word, verbs[i]))
+////		{
+////			verb = i;
+////			return true;
+////		}
+////	}
+////	return false;
+////}
+//
+//void Advance(char*& pos)
+//{
+//	while (*pos != '\0')
+//	{
+//		pos++;
+//		if (*pos == ' ')
+//		{
+//			break;
+//		}
+//	}
+//}
+//
+
+
+//void Clear(char* string)
+//{
+
+//}
+//
+//void Execute(char* inputString)
+//{
+//	int verb = -1;
+//	int noun = -1;
+//
+//	char* pos = &inputString[0];
+//
+//	while (*pos != '\0')
+//	{
+//		if (!FindWord(pos))
+//		{
+//			pos++;
+//			continue;
+//		}
+//
+//		//if (FindVerb(pos, verb))
+//		//{
+//		//	printf("Found Verb: ");
+//		//	DisplayFirstWord(pos);
+//		//}
+//
+//		//if (FindSubject(pos, noun))
+//		//{
+//		//	printf("Found Subject: ");
+//		//	DisplayFirstWord(pos);
+//		//}
+//
+//		//if (FindObject(pos, noun))
+//		//{
+//		//	printf("Found Subject: ");
+//		//	DisplayFirstWord(pos);
+//		//}
+//
+//		//if (!Decipher(verb, noun))
+//		//{
+//		//	printf("I don't understand.\n");
+//		//}
+//		Advance(pos);
+//	}
+//
+//}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Zork 3
+// 
+//#1 know every word
+// 
+//I dont know the word "blank"
+//There is no verb in the sentence
+//only one direction
+//you used "verb" in a way I dont understand
+//Only one word per word type if not ^
+//Equipt last item picked up
+//"Turn on lamp", took lamp and turned it on
+//"Take lamp and turn on", took lamp and turned it on.
+//2 verbs in a row, "You used the word "2nd verb" in a way that I dont understand."
+//lksdfj drop, drop lksdfj, I dont know the word "lksjdf"
