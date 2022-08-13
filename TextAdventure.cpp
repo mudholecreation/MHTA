@@ -22,14 +22,11 @@ void DisplayRoom(Room* room)
 	DisplayName(room);
 	printf("\n");
 	DisplayDescription(room);
-	printf("\n");
 }
 
 void DisplayUnknownWord(char* inputString)
 {
-	printf("\n");
 	printf("I don't know the word \"");
-
 	for (; *inputString != '\0' && *inputString != ' '; inputString++)
 	{
 		printf("%c", *inputString);
@@ -39,7 +36,7 @@ void DisplayUnknownWord(char* inputString)
 
 void GetInput(char* inputString)
 {
-	printf(">");
+	printf("\n>");
 	char c = 0;
 	size_t i = 0;
 	while (true)
@@ -58,7 +55,6 @@ void GetInput(char* inputString)
 			}
 		}
 	}
-	printf("\n");
 }
 
 void LowerInput(char* inputString)
@@ -81,7 +77,7 @@ void ClearInput(char* inputString)
 	}
 }
 
-bool CompareString(const char* str1, const char* str2)
+bool CompareString(char*& str1, const char* str2)
 {
 	while (*str1 != '\0' && *str2 != '\0')
 	{
@@ -95,11 +91,11 @@ bool CompareString(const char* str1, const char* str2)
 	return true;
 }
 
-bool FindWordType(char* inputString, Word* words, Word*& word)
+bool FindWordType(char*& inputString, Word* words, Word*& word)
 {
 	for (size_t i = 0; i < MAX_WORD_COUNT; i++)
 	{
-		if (words[i].type == WordType::INVALID_WORD)
+		if (words[i].type == INVALID_WORD)
 		{
 			return false;
 		}

@@ -10,24 +10,27 @@ int main()
 	{
 		GetInput(game.inputString);
 		LowerInput(game.inputString);
+		char* input = game.inputString;
+		game.currentWord = nullptr;
 
-		char* sentence = game.inputString;
-		while (*sentence != '\0')
+		do
 		{
-			if (!FindWord(sentence))
+			if (!FindWord(input))
 			{
-				printf("Couldn't find any words.\n");
+				if (!game.currentWord)
+				{
+					printf("I couldn't find any words.\n");
+				}
 				break;
 			}
-			if (!FindWordType(sentence, game.words, game.currentWord))
+			if (!FindWordType(input, game.words, game.currentWord))
 			{
-				printf("Couldn't find any words that I know.\n");
+				DisplayUnknownWord(input);
 				break;
 			}
 			else
 			{
-				printf("found: %s\n", game.currentWord->string);
-				break;
+				printf("Found: %s\n", game.currentWord->string);
 			}
 			//if (!game.currentWord)
 			//{
@@ -44,7 +47,7 @@ int main()
 			//}
 	//		FindItem(game);
 	//		Execute(game);
-		}
+		} while (*input != '\0');
 		ClearInput(game.inputString);
 	}
 	//Save(game);

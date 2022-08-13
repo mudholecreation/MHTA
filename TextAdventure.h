@@ -5,7 +5,7 @@ const unsigned char MAX_WORD_LENGTH = 16;
 const unsigned char MAX_SENTENCE_LENGTH = 64;
 const unsigned char MAX_WORD_COUNT = 32;
 
-enum class WordType
+enum WordType
 {
 	INVALID_WORD,
 	VERB,
@@ -18,7 +18,7 @@ enum class WordType
 struct Word
 {
 	char string[MAX_WORD_LENGTH] = {};
-	WordType type = WordType::INVALID_WORD;
+	WordType type = INVALID_WORD;
 };
 
 struct Noun
@@ -80,7 +80,7 @@ void GetInput(char* inputString);
 void LowerInput(char* inputString);
 void ClearInput(char* inputString);
 
-bool FindWordType(char* inputString, Word* words, Word*& word);
+bool FindWordType(char*& inputString, Word* words, Word*& word);
 bool FindWord(char*& inputString);
 
 //struct Pickup : Noun
