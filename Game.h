@@ -10,6 +10,6 @@ struct Game
 	Character player = {};
 	Word* currentWord = nullptr;
 	Room* currentRoom = nullptr;
-	Word words[MAX_WORD_COUNT] = { "jump", VERB, "the", CONJUCTION, "and", CONJUCTION};
+	Word words[MAX_WORD_COUNT] = { "then", CONJUNCTION, "the", CONJUNCTION, "and", CONJUNCTION };
 
 };

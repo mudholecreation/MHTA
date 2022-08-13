@@ -12,7 +12,7 @@ enum WordType
 	ROOM,
 	OBJECT,
 	CHARACTER,
-	CONJUCTION
+	CONJUNCTION
 };
 
 struct Word
