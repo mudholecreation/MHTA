@@ -88,13 +88,8 @@ int FindLength(char* string)
 }
 bool CompareString(char*& str1, char* str2)
 {
-	if (FindLength(str1) != FindLength(str2))
-	{
-		return false;
-	}
-
 	char* string = str1;
-	while (*str2 != '\0')
+	while (	*str1 != '\0' && *str1 != ' '  && *str2 != '\0')
 	{
 		if (*string != *str2)
 		{
