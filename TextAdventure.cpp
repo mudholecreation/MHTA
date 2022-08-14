@@ -76,32 +76,48 @@ void ClearInput(char* inputString)
 		inputString[i] = '\0';
 	}
 }
-
-bool CompareString(char*& str1, const char* str2)
+int FindLength(char* string)
 {
-	while (*str1 != '\0' && *str2 != '\0')
+	int count = 0;
+	while (*string != '\0' && *string != ' ')
 	{
-		if (*str1 != *str2)
+		string++;
+		count++;
+	}
+	return count;
+}
+bool CompareString(char*& str1, char* str2)
+{
+	if (FindLength(str1) != FindLength(str2))
+	{
+		return false;
+	}
+
+	char* string = str1;
+	while (*str2 != '\0')
+	{
+		if (*string != *str2)
 		{
 			return false;
 		}
-		str1++;
+		string++;
 		str2++;
 	}
+	str1 = string;
 	return true;
 }
 
-bool FindWordType(char*& inputString, Word* words, Word*& word)
+bool FindWordType(char*& inputString, Word* words, Word*& newCurrentWord)
 {
 	for (size_t i = 0; i < MAX_WORD_COUNT; i++)
 	{
 		if (words[i].type == INVALID_WORD)
 		{
-			return false;
+			continue;
 		}
 		if (CompareString(inputString, words[i].string))
 		{
-			word = &words[i];
+			newCurrentWord = &words[i];
 			return true;
 		}
 	}

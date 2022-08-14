@@ -80,7 +80,7 @@ void GetInput(char* inputString);
 void LowerInput(char* inputString);
 void ClearInput(char* inputString);
 
-bool FindWordType(char*& inputString, Word* words, Word*& word);
+bool FindWordType(char*& inputString, Word* words, Word*& newCurrentWord);
 bool FindWord(char*& inputString);
 
 //struct Pickup : Noun

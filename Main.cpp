@@ -12,7 +12,6 @@ int main()
 		LowerInput(game.inputString);
 		char* input = game.inputString;
 		game.currentWord = nullptr;
-
 		do
 		{
 			if (!FindWord(input))
