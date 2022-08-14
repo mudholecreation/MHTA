@@ -76,16 +76,6 @@ void ClearInput(char* inputString)
 		inputString[i] = '\0';
 	}
 }
-int FindLength(char* string)
-{
-	int count = 0;
-	while (*string != '\0' && *string != ' ')
-	{
-		string++;
-		count++;
-	}
-	return count;
-}
 bool CompareString(char*& str1, char* str2)
 {
 	char* string = str1;
