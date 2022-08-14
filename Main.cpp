@@ -31,25 +31,8 @@ int main()
 			{
 				printf("Found: %s\n", game.currentWord->string);
 			}
-			//if (!game.currentWord)
-			//{
-			//	//DisplayUnknownWord(game.inputString);
-			//	game.inputString;
-			//	break;
-			//}
-			//switch (game.currentWord->type)
-			//{
-			//	case WordType::VERB:
-
-
-			//		break;
-			//}
-	//		FindItem(game);
-	//		Execute(game);
 		} while (*input != '\0');
 		ClearInput(game.inputString);
 	}
-	//Save(game);
-	//Destroy(game);
 	return 0;
 }
