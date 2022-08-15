@@ -22,14 +22,14 @@ int main()
 				}
 				break;
 			}
-			if (!FindWordType(input, game.words, game.currentWord))
+			if (!FindWordType(input, (char**)game.verbs, game.currentWord))
 			{
 				DisplayUnknownWord(input);
 				break;
 			}
 			else
 			{
-				printf("Found: %s\n", game.currentWord->string);
+				printf("Found: %s\n", game.currentWord);
 			}
 		} while (*input != '\0');
 		ClearInput(game.inputString);

@@ -76,7 +76,7 @@ void ClearInput(char* inputString)
 		inputString[i] = '\0';
 	}
 }
-bool CompareString(char*& str1, char* str2)
+bool CompareString(char*& str1, const char* str2)
 {
 	char* string = str1;
 	while (	*str1 != '\0' && *str1 != ' '  && *str2 != '\0')
@@ -92,20 +92,32 @@ bool CompareString(char*& str1, char* str2)
 	return true;
 }
 
-bool FindWordType(char*& inputString, Word* words, Word*& newCurrentWord)
+bool FindWordType(char*& inputString, char** words, char*& newCurrentWord)
 {
-	for (size_t i = 0; i < MAX_WORD_COUNT; i++)
+	WordType type = INVALID_WORD;
+	//Search Verbs
+	for (size_t i = 0; i < MAX_VERB_COUNT; i++)
 	{
-		if (words[i].type == INVALID_WORD)
+		if (!words[i])
 		{
-			continue;
+			break;
 		}
-		if (CompareString(inputString, words[i].string))
+		if (CompareString(inputString, words[i]))
 		{
-			newCurrentWord = &words[i];
+			newCurrentWord = words[i];
+			type = VERB;
 			return true;
 		}
 	}
+	//Search Objects
+
+	//Search Rooms
+
+	//Search Characters
+
+
+
+
 	return false;
 }
 
