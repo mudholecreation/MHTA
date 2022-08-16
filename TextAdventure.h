@@ -6,6 +6,9 @@ const unsigned char MAX_SENTENCE_LENGTH = 64;
 const unsigned char MAX_VERB_COUNT = 10;
 const unsigned char MAX_CONJUNCTION_COUNT = 10;
 const unsigned char MAX_ROOM_COUNT = 10;
+const unsigned char MAX_OBJECT_COUNT = 10;
+const unsigned char MAX_CHARACTER_COUNT = 10;
+
 
 enum WordType
 {
@@ -76,5 +79,6 @@ void LowerInput(char* inputString);
 void ClearInput(char* inputString);
 
 bool FindWord(char*& inputString);
-bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, char*& newCurrentWord);
+bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects, 
+	const char** characters, char*& newCurrentWord);
 

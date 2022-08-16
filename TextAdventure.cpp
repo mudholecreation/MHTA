@@ -110,57 +110,57 @@ bool CompareString(char*& str1, const char* str2)
 	return false;
 
 }
-
-bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, char*& newCurrentWord)
+bool FindType(char*& inputString, const char** strings, const unsigned int count, char*& newCurrentWord)
+{
+	for (size_t i = 0; i < count; i++)
+	{
+		if (!strings[i])
+		{
+			continue;
+		}
+		if (CompareString(inputString, strings[i]))
+		{
+			newCurrentWord = (char*)strings[i];
+			return true;
+		}
+	}
+	return false;
+}
+bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects,
+	const char** characters, char*& newCurrentWord)
 {
 	WordType type = INVALID_WORD;
+
 	//Search Verbs
-	for (size_t i = 0; i < MAX_VERB_COUNT; i++)
+	if (FindType(inputString, verbs, MAX_VERB_COUNT, newCurrentWord))
 	{
-		if (!verbs[i])
-		{
-			break;
-		}
-		if (CompareString(inputString, verbs[i]))
-		{
-			newCurrentWord = (char*)verbs[i];
-			type = VERB;
-			return true;
-		}
+		type = VERB;
+		return true;
 	}
 	//Search Conjunctions
-	for (size_t i = 0; i < MAX_CONJUNCTION_COUNT; i++)
+	if (FindType(inputString, conjunctions, MAX_CONJUNCTION_COUNT, newCurrentWord))
 	{
-		if (!conjunctions[i])
-		{
-			break;
-		}
-		if (CompareString(inputString, conjunctions[i]))
-		{
-			newCurrentWord = (char*)conjunctions[i];
-			type = CONJUNCTION;
-			return true;
-		}
+		type = CONJUNCTION;
+		return true;
 	}
 	//Search Rooms
-	for (size_t i = 0; i < MAX_ROOM_COUNT; i++)
+	if (FindType(inputString, rooms, MAX_ROOM_COUNT, newCurrentWord))
 	{
-		if (!rooms[i])
-		{
-			break;
-		}
-		if (CompareString(inputString, rooms[i]))
-		{
-			newCurrentWord = (char*)rooms[i];
-			type = ROOM;
-			return true;
-		}
+		type = ROOM;
+		return true;
+	}
+	//Search Objects
+	if (FindType(inputString, objects, MAX_OBJECT_COUNT, newCurrentWord))
+	{
+		type = OBJECT;
+		return true;
 	}
 	//Search Characters
-
-
-
-
+	if (FindType(inputString, characters, MAX_CHARACTER_COUNT, newCurrentWord))
+	{
+		type = CHARACTER;
+		return true;
+	}
 	return false;
 }
 
