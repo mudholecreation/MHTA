@@ -76,10 +76,24 @@ void ClearInput(char* inputString)
 		inputString[i] = '\0';
 	}
 }
+int FindLength(const char* string)
+{
+	int size = 0;
+	while (*string != '\0' && *string != ' ')
+	{
+		size++;
+		string++;
+	}
+	return size;
+}
 bool CompareString(char*& str1, const char* str2)
 {
+	if (FindLength(str1) != FindLength(str2))
+	{
+		return false;
+	}
 	char* string = str1;
-	while (	*str1 != '\0' && *str1 != ' '  && *str2 != '\0')
+	while (*str2 != '\0')
 	{
 		if (*string != *str2)
 		{
@@ -92,27 +106,51 @@ bool CompareString(char*& str1, const char* str2)
 	return true;
 }
 
-bool FindWordType(char*& inputString, char** words, char*& newCurrentWord)
+bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, char*& newCurrentWord)
 {
 	WordType type = INVALID_WORD;
 	//Search Verbs
 	for (size_t i = 0; i < MAX_VERB_COUNT; i++)
 	{
-		if (!words[i])
+		if (!verbs[i])
 		{
 			break;
 		}
-		if (CompareString(inputString, words[i]))
+		if (CompareString(inputString, verbs[i]))
 		{
-			newCurrentWord = words[i];
+			newCurrentWord = (char*)verbs[i];
 			type = VERB;
 			return true;
 		}
 	}
-	//Search Objects
-
+	//Search Conjunctions
+	for (size_t i = 0; i < MAX_CONJUNCTION_COUNT; i++)
+	{
+		if (!conjunctions[i])
+		{
+			break;
+		}
+		if (CompareString(inputString, conjunctions[i]))
+		{
+			newCurrentWord = (char*)conjunctions[i];
+			type = CONJUNCTION;
+			return true;
+		}
+	}
 	//Search Rooms
-
+	for (size_t i = 0; i < MAX_ROOM_COUNT; i++)
+	{
+		if (!rooms[i])
+		{
+			break;
+		}
+		if (CompareString(inputString, rooms[i]))
+		{
+			newCurrentWord = (char*)rooms[i];
+			type = ROOM;
+			return true;
+		}
+	}
 	//Search Characters
 
 

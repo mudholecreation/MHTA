@@ -22,7 +22,7 @@ int main()
 				}
 				break;
 			}
-			if (!FindWordType(input, (char**)game.verbs, game.currentWord))
+			if (!FindWordType(input, game.verbs, game.conjunctions, game.rooms, game.currentWord))
 			{
 				DisplayUnknownWord(input);
 				break;
