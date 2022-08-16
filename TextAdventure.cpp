@@ -79,8 +79,12 @@ void ClearInput(char* inputString)
 int FindLength(const char* string)
 {
 	int size = 0;
-	while (*string != '\0' && *string != ' ')
+	while (*string != '\0')
 	{
+		if (*string == ' ')
+		{
+			return size;
+		}
 		size++;
 		string++;
 	}
@@ -88,10 +92,6 @@ int FindLength(const char* string)
 }
 bool CompareString(char*& str1, const char* str2)
 {
-	if (FindLength(str1) != FindLength(str2))
-	{
-		return false;
-	}
 	char* string = str1;
 	while (*str2 != '\0')
 	{
@@ -102,8 +102,13 @@ bool CompareString(char*& str1, const char* str2)
 		string++;
 		str2++;
 	}
-	str1 = string;
-	return true;
+	if (*string == ' ' || *string == '\0')
+	{
+		str1 = string;
+		return true;
+	}
+	return false;
+
 }
 
 bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, char*& newCurrentWord)
