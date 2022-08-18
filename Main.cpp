@@ -22,7 +22,8 @@ int main()
 				}
 				break;
 			}
-			if (!FindWordType(input, game.verbs, game.conjunctions, game.rooms, game.objects, game.characters, game.currentWord))
+			if (!FindWordType(input, game.verbs, game.conjunctions, game.rooms, game.objects, 
+				game.characters, game.prepositions, game.currentWord))
 			{
 				DisplayUnknownWord(input);
 				break;
@@ -30,8 +31,14 @@ int main()
 			else
 			{
 				printf("Found: %s\n", game.currentWord);
+				AddFoundWord(game.currentWord);
 			}
 		} while (*input != '\0');
+
+		if (!FindSubroutine())
+		{
+
+		}
 		ClearInput(game.inputString);
 	}
 	return 0;

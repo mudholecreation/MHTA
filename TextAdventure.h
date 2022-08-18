@@ -8,6 +8,7 @@ const unsigned char MAX_CONJUNCTION_COUNT = 10;
 const unsigned char MAX_ROOM_COUNT = 10;
 const unsigned char MAX_OBJECT_COUNT = 10;
 const unsigned char MAX_CHARACTER_COUNT = 10;
+const unsigned char MAX_PREPOSITION_COUNT = 10;
 
 
 enum WordType
@@ -17,7 +18,8 @@ enum WordType
 	ROOM,
 	OBJECT,
 	CHARACTER,
-	CONJUNCTION
+	CONJUNCTION,
+	PREPOSITION
 };
 
 struct Noun
@@ -80,5 +82,8 @@ void ClearInput(char* inputString);
 
 bool FindWord(char*& inputString);
 bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects, 
-	const char** characters, char*& newCurrentWord);
+	const char** characters, const char** prepositions, char*& newCurrentWord);
+
+bool FindSubroutine();
+void AddFoundWord(char* word);
 

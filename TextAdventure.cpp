@@ -127,41 +127,51 @@ bool FindType(char*& inputString, const char** strings, const unsigned int count
 	return false;
 }
 bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects,
-	const char** characters, char*& newCurrentWord)
+	const char** characters, const char** prepositions, char*& newCurrentWord)
 {
-	WordType type = INVALID_WORD;
-
 	//Search Verbs
 	if (FindType(inputString, verbs, MAX_VERB_COUNT, newCurrentWord))
 	{
-		type = VERB;
 		return true;
 	}
 	//Search Conjunctions
 	if (FindType(inputString, conjunctions, MAX_CONJUNCTION_COUNT, newCurrentWord))
 	{
-		type = CONJUNCTION;
 		return true;
 	}
 	//Search Rooms
 	if (FindType(inputString, rooms, MAX_ROOM_COUNT, newCurrentWord))
 	{
-		type = ROOM;
 		return true;
 	}
 	//Search Objects
 	if (FindType(inputString, objects, MAX_OBJECT_COUNT, newCurrentWord))
 	{
-		type = OBJECT;
 		return true;
 	}
 	//Search Characters
 	if (FindType(inputString, characters, MAX_CHARACTER_COUNT, newCurrentWord))
 	{
-		type = CHARACTER;
+		return true;
+	}
+	//Search prepositions
+	if (FindType(inputString, prepositions, MAX_PREPOSITION_COUNT, newCurrentWord))
+	{
 		return true;
 	}
 	return false;
+}
+
+bool FindSubroutine()
+{
+
+
+	return false;
+}
+
+void AddFoundWord(char* word)
+{
+
 }
 
 bool FindWord(char*& inputString)
