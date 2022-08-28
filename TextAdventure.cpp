@@ -1,29 +1,6 @@
 #include "TextAdventure.h"
 
 
-void DisplayName(Noun* noun)
-{
-	if (noun)
-	{
-		printf(noun->name);
-	}
-}
-
-void DisplayDescription(Noun* noun)
-{
-	if (noun)
-	{
-		printf(noun->description);
-	}
-}
-
-void DisplayRoom(Room* room)
-{
-	DisplayName(room);
-	printf("\n");
-	DisplayDescription(room);
-}
-
 void DisplayUnknownWord(char* inputString)
 {
 	printf("I don't know the word \"");
@@ -110,7 +87,7 @@ bool CompareString(char*& str1, const char* str2)
 	return false;
 
 }
-bool FindType(char*& inputString, const char** strings, const unsigned int count, char*& newCurrentWord)
+bool FindType(char*& inputString, const char** strings, const unsigned int count, Word& word)
 {
 	for (size_t i = 0; i < count; i++)
 	{
@@ -120,56 +97,56 @@ bool FindType(char*& inputString, const char** strings, const unsigned int count
 		}
 		if (CompareString(inputString, strings[i]))
 		{
-			newCurrentWord = (char*)strings[i];
+			word.index = i;
+			word.string = (char*)strings[i];
 			return true;
 		}
 	}
 	return false;
 }
 bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects,
-	const char** characters, const char** prepositions, char*& newCurrentWord)
+	const char** characters, const char** prepositions, Word& word)
 {
 	//Search Verbs
-	if (FindType(inputString, verbs, MAX_VERB_COUNT, newCurrentWord))
+	if (FindType(inputString, verbs, MAX_VERB_COUNT, word))
 	{
+		word.type = VERB;
 		return true;
 	}
 	//Search Conjunctions
-	if (FindType(inputString, conjunctions, MAX_CONJUNCTION_COUNT, newCurrentWord))
+	if (FindType(inputString, conjunctions, MAX_CONJUNCTION_COUNT, word))
 	{
+		word.type = CONJUNCTION;
 		return true;
 	}
 	//Search Rooms
-	if (FindType(inputString, rooms, MAX_ROOM_COUNT, newCurrentWord))
+	if (FindType(inputString, rooms, MAX_ROOM_COUNT, word))
 	{
+		word.type = ROOM;
 		return true;
 	}
 	//Search Objects
-	if (FindType(inputString, objects, MAX_OBJECT_COUNT, newCurrentWord))
+	if (FindType(inputString, objects, MAX_OBJECT_COUNT, word))
 	{
+		word.type = OBJECT;
 		return true;
 	}
 	//Search Characters
-	if (FindType(inputString, characters, MAX_CHARACTER_COUNT, newCurrentWord))
+	if (FindType(inputString, characters, MAX_CHARACTER_COUNT, word))
 	{
+		word.type = CHARACTER;
 		return true;
 	}
 	//Search prepositions
-	if (FindType(inputString, prepositions, MAX_PREPOSITION_COUNT, newCurrentWord))
+	if (FindType(inputString, prepositions, MAX_PREPOSITION_COUNT, word))
 	{
+		word.type = PREPOSITION;
 		return true;
 	}
 	return false;
 }
 
-bool FindSubroutine()
-{
-
-
-	return false;
-}
-
-void AddFoundWord(char* word)
+void AddWordToSubroutine(Word& word, bool sentence)
 {
 
 }

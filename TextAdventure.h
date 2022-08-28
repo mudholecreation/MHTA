@@ -10,11 +10,12 @@ const unsigned char MAX_OBJECT_COUNT = 10;
 const unsigned char MAX_CHARACTER_COUNT = 10;
 const unsigned char MAX_PREPOSITION_COUNT = 10;
 
+const int INVALID = -1;
+const int NONE = 0;
 
 enum WordType
 {
-	INVALID_WORD,
-	VERB,
+	VERB = 1,
 	ROOM,
 	OBJECT,
 	CHARACTER,
@@ -22,58 +23,59 @@ enum WordType
 	PREPOSITION
 };
 
+struct Word
+{
+	int type = NONE;
+	char* string;
+	int index = INVALID;
+};
 struct Noun
 {
-	char name[MAX_WORD_LENGTH] = {};
-	char description[MAX_SENTENCE_LENGTH] = "";
+	int name = INVALID;
+	int description = INVALID;
 };
 
 enum RoomFlag
 {
-	INVALID_ROOM,
-	LIT,
+	LIT = 1,
 	LOCKED,
 };
 
 enum ObjectFlag
 {
-	INVALID_OBJECT,
-	PICKUP,
+	PICKUP = 1,
 	EQUIPTED,
 };
 
 enum CharacterFlag
 {
-	INVALID_CHARACTER,
+	
 };
 
 struct Room : Noun
 {
-	Room* up = nullptr;
-	Room* down = nullptr;
-	Room* north = nullptr;
-	Room* south = nullptr;
-	Room* east = nullptr;
-	Room* west = nullptr;
-	int flags = INVALID_ROOM;
+	int up = INVALID;
+	int down = INVALID;
+	int north = INVALID;
+	int south = INVALID;
+	int east = INVALID;
+	int west = INVALID;
+	int flags = NONE;
 };
 
 struct Object : Noun
 {
-	Room* room = nullptr;
-	int flags = INVALID_OBJECT;
+	int room = INVALID;
+	int flags = NONE;
 };
 
 struct Character : Noun
 {
-	Room* room = nullptr;
+	int room = INVALID;
 	int health = 0;
-	int flags = INVALID_CHARACTER;
+	int flags = NONE;
 };
 
-void DisplayName(Noun* noun);
-void DisplayDescription(Noun* noun);
-void DisplayRoom(Room* room);
 void DisplayUnknownWord(char* inputString);
 
 void GetInput(char* inputString);
@@ -82,8 +84,7 @@ void ClearInput(char* inputString);
 
 bool FindWord(char*& inputString);
 bool FindWordType(char*& inputString, const char** verbs, const char** conjunctions, const char** rooms, const char** objects, 
-	const char** characters, const char** prepositions, char*& newCurrentWord);
+	const char** characters, const char** prepositions, Word& word);
 
-bool FindSubroutine();
-void AddFoundWord(char* word);
+void AddWordToSubroutine(Word& word, bool sentence);
 

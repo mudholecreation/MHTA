@@ -4,38 +4,39 @@
 int main()
 {
 	Game game = {};
-	DisplayRoom(game.player.room);
+	game.DisplayRoom(game.player.room);
 
 	while (true)
 	{
 		GetInput(game.inputString);
 		LowerInput(game.inputString);
 		char* input = game.inputString;
-		game.currentWord = nullptr;
+		game.word = {};
+
 		do
 		{
 			if (!FindWord(input))
 			{
-				if (!game.currentWord)
+				if (game.word.type == INVALID)
 				{
 					printf("I couldn't find any words.\n");
 				}
 				break;
 			}
-			if (!FindWordType(input, game.verbs, game.conjunctions, game.rooms, game.objects, 
-				game.characters, game.prepositions, game.currentWord))
+			if (!FindWordType(input, game.verbStrings, game.conjunctionStrings, game.roomNames, game.objectNames,
+				game.characterNames, game.prepositionStrings, game.word))
 			{
 				DisplayUnknownWord(input);
 				break;
 			}
 			else
 			{
-				printf("Found: %s\n", game.currentWord);
-				AddFoundWord(game.currentWord);
+				printf("Found: %s\n", game.word.string);
+				AddWordToSubroutine(game.word, game.sentence);
 			}
 		} while (*input != '\0');
 
-		if (!FindSubroutine())
+		if (!game.ExecuteSubroutine())
 		{
 
 		}
